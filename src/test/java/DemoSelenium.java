@@ -86,7 +86,6 @@ public class DemoSelenium {
         String classes = (driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[8]/div/i")).getAttribute("class"));
         assertTrue(classes.contains("glyphicon-ok"));
     }
-
     @Test
     public void correctProjectDescriptionInputTest(){
         driver.get("http://demo.seleniumeasy.com/input-form-demo.html");
@@ -135,7 +134,6 @@ public class DemoSelenium {
         String classes = driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[2]/div/i")).getAttribute("class");
         assertTrue(classes.contains("glyphicon-remove"));
     }
-
     @Test
     public void NotCorrectEmailInputTest(){
         driver.get("http://demo.seleniumeasy.com/input-form-demo.html");
@@ -143,15 +141,40 @@ public class DemoSelenium {
         String classes = (driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[3]/div/i")).getAttribute("class"));
         assertTrue(classes.contains("glyphicon-remove"));
     }
-
-
-//    @Test
-//    public void NotCorrectPhoneNumberInputTest(){
-//        driver.get("http://demo.seleniumeasy.com/input-form-demo.html");
-//        driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[4]/div/div/input")).sendKeys("845");
-//        String classes = (driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[4]/div/i")).getAttribute("class"));
-//        assertTrue(classes.contains("glyphicon-remove"));
-//    }
+    @Test
+    public void NotCorrectEmptyInputTest(){
+        driver.get("http://demo.seleniumeasy.com/input-form-demo.html");
+        driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[3]/div/div/input")).sendKeys(" ");
+        assertEquals(driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[3]/div/small[1]")).getText(),"Please supply your email address");
+        assertEquals(driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[3]/div/small[2]")).getText(),"Please supply a valid email address");
+        String classes = (driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[3]/div/i")).getAttribute("class"));
+        assertTrue(classes.contains("glyphicon-remove"));
+    }
+    @Test
+    public void NotCorrectPhoneNumberInputTest(){
+        driver.get("http://demo.seleniumeasy.com/input-form-demo.html");
+        driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[4]/div/div/input")).sendKeys("845");
+        assertEquals(driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[4]/div/small[2]")).getText(),"Please supply a vaild phone number with area code");
+        String classes = (driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[4]/div/i")).getAttribute("class"));
+        assertTrue(classes.contains("glyphicon-remove"));
+    }
+    @Test
+    public void NotCorrectEmptyPhoneNumberInputTest(){
+        driver.get("http://demo.seleniumeasy.com/input-form-demo.html");
+        driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[4]/div/div/input")).sendKeys(" ");
+        assertEquals(driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[4]/div/small[1]")).getText(),"Please supply your phone number");
+        assertEquals(driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[4]/div/small[2]")).getText(),"Please supply a vaild phone number with area code");
+        String classes = (driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[4]/div/i")).getAttribute("class"));
+        assertTrue(classes.contains("glyphicon-remove"));
+    }
+    @Test
+    public void NotCorrectAddressToLittleLettersNumberInputTest(){
+        driver.get("http://demo.seleniumeasy.com/input-form-demo.html");
+        driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[5]/div/div/input")).sendKeys("mo");
+        assertEquals(driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[5]/div/small[1]")).getText(),"Please enter more than 8 characters");
+        String classes = (driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[5]/div/i")).getAttribute("class"));
+        assertTrue(classes.contains("glyphicon-remove"));
+    }
 
 
 
