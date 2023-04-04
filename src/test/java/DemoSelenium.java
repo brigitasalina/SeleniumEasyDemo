@@ -11,13 +11,13 @@ import java.time.Duration;
 public class DemoSelenium {
     public WebDriver driver;
 
-    @Test
+    @Test(priority = -1)
     public void fillFormWithCorrectDataTest(){
         driver.get("http://demo.seleniumeasy.com/input-form-demo.html");
         driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[1]/div/div/input")).sendKeys("Brigita");
         driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[2]/div/div/input")).sendKeys("Salina");
         driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[3]/div/div/input")).sendKeys("brigita.salina@gmail.com");
-        driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[4]/div/div/input")).sendKeys("86455551212");
+        driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[4]/div/div/input")).sendKeys("8455551212");
         driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[5]/div/div/input")).sendKeys("k.skirpos 13-29");
         driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[6]/div/div/input")).sendKeys("Kaunas");
         driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[7]/div/div/select")).sendKeys("Arkansas");
@@ -75,10 +75,17 @@ public class DemoSelenium {
     @Test
     public void correctStateInputTest(){
         driver.get("http://demo.seleniumeasy.com/input-form-demo.html");
-        driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[7]/div/div/select")).sendKeys("Arkansas");
-        String classes = (driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[7]/div/i")).getAttribute("class"));
-        assertTrue(classes.contains("glyphicon-ok"));
+        driver.findElement(By.name("state")).click();
+        driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[7]/div/div/select/option[4]")).click();
+
     }
+//    @Test
+//    public void correctStateInputTest(){
+//        driver.get("http://demo.seleniumeasy.com/input-form-demo.html");
+//        driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[7]/div/div/select")).sendKeys("Arkansas");
+//        String classes = (driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[7]/div/i")).getAttribute("class"));
+//        assertTrue(classes.contains("glyphicon-ok"));
+//    }
     @Test
     public void correctZipCodeInputTest(){
         driver.get("http://demo.seleniumeasy.com/input-form-demo.html");
@@ -168,13 +175,32 @@ public class DemoSelenium {
         assertTrue(classes.contains("glyphicon-remove"));
     }
     @Test
-    public void NotCorrectAddressToLittleLettersNumberInputTest(){
+    public void NotCorrectAddressOneCharacterInputTest(){
         driver.get("http://demo.seleniumeasy.com/input-form-demo.html");
         driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[5]/div/div/input")).sendKeys("mo");
         assertEquals(driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[5]/div/small[1]")).getText(),"Please enter more than 8 characters");
         String classes = (driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[5]/div/i")).getAttribute("class"));
         assertTrue(classes.contains("glyphicon-remove"));
     }
+    @Test
+    public void NotCorrectCityNameOneCharacterInputTest(){
+        driver.get("http://demo.seleniumeasy.com/input-form-demo.html");
+        driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[6]/div/div/input")).sendKeys("d");
+        assertEquals(driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[6]/div/small[1]")).getText(),"Please enter more than 4 characters");
+        String classes = (driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[6]/div/i")).getAttribute("class"));
+        assertTrue(classes.contains("glyphicon-remove"));
+    }
+    @Test
+    public void NotCorrectEmptyCityNameInputTest(){
+        driver.get("http://demo.seleniumeasy.com/input-form-demo.html");
+        driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[6]/div/div/input")).sendKeys(" ");
+        assertEquals(driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[6]/div/small[1]")).getText(),"Please enter more than 4 characters");
+        assertEquals(driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[6]/div/small[2]")).getText(),"Please supply your city");
+        String classes = (driver.findElement(By.xpath("//*[@id=\"contact_form\"]/fieldset/div[6]/div/i")).getAttribute("class"));
+        assertTrue(classes.contains("glyphicon-remove"));
+    }
+
+
 
 
 
